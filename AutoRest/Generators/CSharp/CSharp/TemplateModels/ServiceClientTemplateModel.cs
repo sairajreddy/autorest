@@ -67,6 +67,24 @@ namespace Microsoft.Rest.Generator.CSharp
                 return string.Join(", ", requireParams);
             }
         }
+        
+        public string RequiredConstructorParametersExtended
+        {
+            get
+            {
+                
+                var requireParams = new List<string>();
+                
+                /* This . */
+                    
+                this.Properties.Where(p => p.IsRequired && !(p.IsReadOnly)) 
+                    .ForEach(p => requireParams.Add(string.Format(CultureInfo.InvariantCulture, 
+                        "{0} {1}", 
+                        p.Type.Name, 
+                        p.Name.ToCamelCase())));
+                return string.Join(", ", requireParams);
+            }
+        }
 
         public bool NeedsTransformationConverter
         {
